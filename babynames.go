@@ -11,7 +11,13 @@ var nameCounts = map[string]int{
 	"Christopher": 19,
 }
 
-func printRawCounts(cnts map[string]int, showHeader bool) {
+var nameEquivs = map[string]string{
+	"John": "Jon",
+	"Chris": "Kris",
+	"Christopher": "Kris",
+}
+
+func printRawCounts(cnts mapt[string]int, showHeader bool) {
 	if showHeader {
 		fmt.Printf("\t%s\t%s\n", "Name", "Count")
 	}
