@@ -55,3 +55,17 @@ func TestAddAdjacency(t *testing.T) {
 		t.Fatalf("Failed to grow adjacency list")
 	}
 }
+
+func TestSetCount(t *testing.T) {
+	g := NewNameGraph()
+	g.SetCount("Sue", 42)
+	if g.nodes["Sue"] != 42 {
+		t.Fatalf("Failed to add name and set count")
+	}
+
+	g.SetCount("Sue", 420)
+	if g.nodes["Sue"] != 420 {
+		t.Fatalf("Failed to change and existing count")
+	}
+}
+

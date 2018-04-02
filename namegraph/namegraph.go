@@ -21,6 +21,10 @@ func (g *NameGraph) AddName(nm string) {
 	}
 }
 
+func (g *NameGraph) SetCount(name string, cnt int) {
+	g.nodes[name] = cnt
+}
+
 func (g *NameGraph) addAdjacency(s1, s2 string) {
 	nodes, ok := g.adjacencies[s1]
 	if !ok {
@@ -34,7 +38,6 @@ func (g *NameGraph) addAdjacency(s1, s2 string) {
 	}
 	g.adjacencies[s1] = append(nodes, s2)
 }
-
 
 func (g *NameGraph) AddAdjacency(s1, s2 string) {
 	g.AddName(s1)
