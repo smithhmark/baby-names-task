@@ -60,3 +60,48 @@ func (g *NameGraph) bfs(root string, v GraphVisitor) {
 	}
 }
 
+type NamesSummary struct {
+	current string
+	Counts map[string]int
+	Synonyms map[string][]string
+	KeyNames map[string]string
+}
+
+func NewNamesSummary() (*NamesSummary) {
+	ns := &NamesSummary{
+		"",
+		map[string]int{},
+		map[string][]string{},
+		map[string]string{},
+	}
+	return ns
+}
+
+func (ns *NamesSummary) Visit(nm string, cnt, depth int) {
+	ns.KeyNames[nm] = ns.current
+	s := ns.Synonyms[ns.current]
+	if len(s) == cap(s) {
+		newlist := make([]string, len(s), 2*cap(s))
+		copy(newlist, s)
+		ns.Synonyms[ns.current] = newlist
+	}
+	ns.Synonyms[ns.current] = append(ns.Synonyms[ns.current], nm)
+}
+
+func (g *NameGraph) Breakdown() (ns *NamesSummary) {
+	ns = NewNamesSummary()
+
+	for name, _ := range g.nodes {
+		if _, alreadyVisited := ns.KeyNames[name]; !alreadyVisited {
+			ns.current = name
+			g.bfs(name, ns)
+		}
+	}
+
+	for keyNode, nodes := range ns.Synonyms {
+		for _, nd := range nodes {
+			ns.Counts[keyNode] = g.nodes[nd] + ns.Counts[keyNode]
+		}
+	}
+	return
+}

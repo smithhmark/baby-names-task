@@ -1,7 +1,7 @@
 package namegraph
 
 import "testing"
-import "fmt"
+//import "fmt"
 
 func TestStringer(t *testing.T) {
 	g := NewNameGraph()
@@ -34,5 +34,37 @@ func TestStringer(t *testing.T) {
 		if s.bits[i] != expected[i] {
 			t.Fatalf("%s != %s\n", s.bits[i], expected[i])
 		}
+	}
+}
+
+func TestBreakdown(t *testing.T) {
+	g := NewNameGraph()
+	g.AddAdjacency("Susan", "Sue")
+	g.AddAdjacency("Sue", "Susanne")
+	g.AddName("Wilma")
+	g.AddAdjacency("Mike", "Michael")
+	g.AddAdjacency("Wally", "Walter")
+	g.AddName("Milly")
+
+	g.SetCount("Milly", 10)
+	g.SetCount("Susan", 10)
+	g.SetCount("Sue", 10)
+	g.SetCount("Susanne", 10)
+	g.SetCount("Wilma", 10)
+	g.SetCount("Mike", 10)
+	g.SetCount("Michael", 10)
+	g.SetCount("Wally", 10)
+	g.SetCount("Walter", 10)
+	ns := g.Breakdown()
+	if val, ok := ns.KeyNames["Sue"]; ok {
+		if ns.Counts[val] != 30 {
+			t.Fatalf("Failed to capture the counts across the entire subgraph")
+		}
+	} else {
+		t.Fatalf("Failed to map name to Keyname")
+	}
+
+	if ns.KeyNames["Wally"] != ns.KeyNames["Walter"] {
+		t.Fatalf("Adjacent names should share a keynode")
 	}
 }
