@@ -34,7 +34,6 @@ type visitRecord struct{
 	depth int
 }
 
-//func (g *NameGraph) bfs(root string, visit func(string,int,int)) {
 func (g *NameGraph) bfs(root string, v GraphVisitor) {
 	q := dumbqueue.NewModeQueue()
 	var curNode string
@@ -42,7 +41,6 @@ func (g *NameGraph) bfs(root string, v GraphVisitor) {
 	var rootVR = visitRecord{root, 0}
 	visits := make(map[string]visitRecord)
 	q.Put(rootVR)
-	//visits[root] = rootVR
 
 	for q.Size() > 0 {
 		val, _ := q.Get()
