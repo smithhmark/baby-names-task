@@ -69,3 +69,23 @@ func TestSetCount(t *testing.T) {
 	}
 }
 
+func TestSever(t *testing.T) {
+	g := NewNameGraph()
+	g.sever("Sue", "Sally")
+
+	g.addAdjacency("Sue", "Sally")
+	g.sever("Sally", "Sue")
+	if len(g.adjacencies["Sue"]) != 1 {
+		t.Fatalf("Sever is only one directoin")
+	}
+	g.sever("Sue", "Sally")
+	if len(g.adjacencies["Sue"]) != 0 {
+		t.Fatalf("Sever should have removed adjacency")
+	}
+
+
+
+
+
+}
+

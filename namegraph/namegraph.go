@@ -45,3 +45,24 @@ func (g *NameGraph) AddAdjacency(s1, s2 string) {
 	g.addAdjacency(s1, s2)
 	g.addAdjacency(s2, s1)
 }
+
+func (g *NameGraph) sever(s1, s2 string) {
+	nodes, ok := g.adjacencies[s1]
+	if ok {
+		idxToRm := -1
+		for idx, val := range nodes {
+			if val == s2 {
+				idxToRm = idx
+				break
+			}
+		}
+		if idxToRm > -1 {
+			g.adjacencies[s1] = append(nodes[:idxToRm], nodes[idxToRm+1:]...)
+		}
+	}
+}
+
+func (g *NameGraph) RemoveAdjacency(s1, s2 string) {
+	g.sever(s1, s2)
+	g.sever(s2, s1)
+}
