@@ -17,3 +17,8 @@ The main package is just a runner over fixed example data at this point.
 #### namegraph
 The namegraph package implements the graph structure.
 
+## Next Steps
+ * It would be interesting to scrape name data sources to push this from pure algorithm exercise to more functional tool
+   * https://www.ssa.gov/oact/babynames/limits.html for name data
+   * http://electricka.com/etaf/muses/languagearts/words/people_first_name_equivalents/people_name_equivalents_table/people_name_equivalents_list.asp?pagesize=500 would be an interesting source of name equivalencies
+   
